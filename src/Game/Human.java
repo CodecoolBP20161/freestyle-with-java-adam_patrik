@@ -5,7 +5,9 @@ package Game;
  */
 public class Human extends Fighter {
 
-    public void dubleHit() {
+    public Human() {
+        super();
+
 
     }
 }
