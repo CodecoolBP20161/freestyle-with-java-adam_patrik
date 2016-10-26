@@ -19,7 +19,7 @@ public class Main {
         do {
             try {
 
-                System.out.println("Enter a number: ");
+                System.out.println("Number of participants: ");
                 int n = numberOfPlayers.nextInt();
                 run = false;
 
