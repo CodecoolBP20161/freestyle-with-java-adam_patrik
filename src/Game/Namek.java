@@ -17,7 +17,7 @@ public class Namek extends Fighter {
         if (p > 20) {
             this.health += 4;
             if (remainedPlayers == 2) {
-                System.out.println(this.name + " has regenerated and get back 3 health points");
+                System.out.println(this.name + " has regenerated and get back 4 health points");
             }
         }
     }
