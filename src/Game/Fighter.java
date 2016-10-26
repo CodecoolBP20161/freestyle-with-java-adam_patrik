@@ -6,7 +6,7 @@ import java.util.Random;
  */
 public class Fighter {
     public String name;
-    public int health, dmg;
+    public int health, mindmg, maxdmg;
     Random rnd = new Random();
     String[] randomFirstName = new String[] {"Beare", "Tonwon", "Makker", "Calcula", "Pensil", "Pistasio", "Pudden", "Drawe",
             "Gallue", "Alamond", "Son", "Majin", "Galalang", "Ceriac", "Daiko", "Radichio", "Potota", "Kassava",
@@ -20,8 +20,13 @@ public class Fighter {
     int min=rnd.nextInt(5);
     public Fighter() {
         this.name = randomFirstName[i] + " " + randomLastName[j];
-        this.health = k;
-        this.dmg = min + rnd.nextInt(max - min);
-
+        this.health = k + 50;
+        this.mindmg = min;
+        this.maxdmg = max;
     }
+
+    public void special(Fighter enemy, int remainedPlayers) {
+        ;
+    }
+
 }

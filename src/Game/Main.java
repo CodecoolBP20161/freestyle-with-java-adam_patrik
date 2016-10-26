@@ -24,19 +24,6 @@ public class Main {
         List<Fighter> players= new ArrayList();
 
 
-//        List<String> classNames = new ArrayList();
-//
-//        classNames.add("Namek");
-//        classNames.add("Human");
-//        classNames.add("Saiyan");
-//        classNames.add("Cyborg");
-//        classNames.add("OtherAlien");
-//
-//        System.out.println(classNames.get(1));
-//        Class<?> clazz = Class.forName(classNames.get(1));
-//        Fighter bela = clazz.newInstance();
-//        System.out.println(bela.name);
-
         int hum = rnd.nextInt(n);
 
         for (int i= 0; i < hum; i++)
@@ -69,9 +56,18 @@ public class Main {
         long seed = System.nanoTime();
         Collections.shuffle(players, new Random(seed));
 
+        System.out.println("\n The participants of the tournament: \n");
+
+        for (Fighter player : players) {
+            System.out.println(player.name + "(" + player.getClass().getSimpleName() + ")");
+        }
 
 
         while(players.size() > 1) {
+
+            if (players.size() == 2) {
+                System.out.println("\n Let's see the final fight \n");
+            }
 
         List<List<Fighter>> pairs = new ArrayList<>();
 
@@ -91,37 +87,40 @@ public class Main {
 
             int e = 0;
 
-            for (int i = 0; i < players.size(); i++) {
+            for (Fighter player : players) {
                 if (pairs.get(e).size() < 2) {
-                    pairs.get(e).add(players.get(i));
+                    pairs.get(e).add(player);
                 } else {
                     e++;
-                    pairs.get(e).add(players.get(i));
+                    pairs.get(e).add(player);
                 }
             }
 
-            for (int i = 0; i < pairs.size(); i++) {
-                if (pairs.get(i).size() == 2) {
+            for (List<Fighter> pair : pairs) {
+                if (pair.size() == 2) {
                     Fighter a, b;
-                    a = pairs.get(i).get(0);
-                    b = pairs.get(i).get(1);
+                    a = pair.get(0);
+                    b = pair.get(1);
                     while (a.health > 0 && b.health > 0) {
 
-                        b.health -= a.dmg;
+                        int admg = a.mindmg + rnd.nextInt(a.maxdmg - a.mindmg);
+                        int bdmg = b.mindmg + rnd.nextInt(b.maxdmg - b.mindmg);
+
+                        b.health -= admg;
                         if (players.size() == 2) {
                             System.out.println(a.name + " attacks " + b.name + "; " + b.name + " now has " + b.health + " health.");
                         }
-                        if(b.health<=0)
-                        {
+                        a.special(b, players.size());
+                        if (b.health <= 0) {
                             players.remove(b);
                             break;
                         }
-                        a.health -= b.dmg;
+                        a.health -= bdmg;
                         if (players.size() == 2) {
                             System.out.println(b.name + " attacks " + a.name + "; " + a.name + " now has " + a.health + " health.");
                         }
-                        if(a.health<=0)
-                        {
+                        b.special(a, players.size());
+                        if (a.health <= 0) {
                             players.remove(a);
                             break;
                         }
@@ -129,8 +128,15 @@ public class Main {
                     }
                 }
             }
-
-            System.out.println(players);
+            if (players.size() > 1) {
+                System.out.println("\n Remained fighters: \n");
+                for (Fighter player : players) {
+                    System.out.println(player.name + "(" + player.getClass().getSimpleName() + ")");
+                }
+            }
+            else {
+                System.out.println("\n The champion is: " + players.get(0).name + " the " + players.get(0).getClass().getSimpleName());
+            }
         }
     }
 }
